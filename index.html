@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Index</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="jquery/map.css" rel="stylesheet" />
+    <script src="jquery/jquery.mobile-1.4.5.min.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+
+                       //check login
+                       function checkLogin(){
+
+					                    if (sessionStorage.getItem('trekrlogin') !== "true" || sessionStorage.getItem('trekrlogin') === null)
+					                    {
+					                        window.location = "login.html";
+					                    }
+
+          						};
+          			    //maps jquery
+                        var dublin = new google.maps.LatLng(53.348244, -6.267938);
+						function initialize() {
+					  		  	var mapOptions = {
+					            center: dublin,
+					            mapTypeId: google.maps.MapTypeId.ROADMAP,
+					            zoom: 11
+					          };	 
+					    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                        //put marker on map
+                          google.maps.event.addListener(map, 'click', function(e) {
+                            placeMarker(e.latLng, map);
+                          });
+
+                          function placeMarker(position, map) {
+                            var marker = new google.maps.Marker({
+                              position: position,
+                              map: map,
+                              draggable:true, //set marker draggable 
+                              animation: google.maps.Animation.DROP //bounce animation
+                            });  
+                            map.panTo(position);
+                          }
+						};
+
+
+						function logout(){
+				                sessionStorage.setItem("trekrlogin",false);
+				                window.location = "login.html";
+
+           				};  
+</script>
+
+</head>
+<body onload="checkLogin(),initialize();">
+    <div id="container">
+        <div id="nav">Nav Menu</div>
+        <div id="map"></div>
+    </div>
+</body>
+</html>

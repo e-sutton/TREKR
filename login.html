@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>TREKR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="jquery/trekr-theme.min.css"/>
+    <link href="jquery/jquery.mobile.icons.min.css" rel="stylesheet" />
+    <link href="jquery/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet" />
+    <link href="jquery/app.css" rel="stylesheet" />
+    <script src="jquery/jquery-2.1.4.min.js"></script>
+    <script src="jquery/jquery.mobile-1.4.5.min.js"></script>
+    <script> 
+            function login(){
+                $(document).ready(function(){
+                    var user = $("#username")[0].value;
+                    var password = $("#password")[0].value;
+                    $.ajax({
+                        type: "POST",
+                        url: "login.php",
+                        data: "username="+user+"&password="+password,
+                        success: function(result){
+                                //$("#message")[0].value = "Success";
+                                //alert("Success!");
+                                //window.location = "login.html";
+                                //var data = $.parseJSON(result);
+                                alert("Ajax success" + result);
+                                if (result === '"Logged In"')
+                                {
+                                //set session via local storage
+                                if (typeof(Storage) !== "undefined") 
+                                    {
+                                        sessionStorage.setItem("trekrlogin",true);
+                                        window.location = "index.html";
+                                    } 
+                                    else 
+                                    {
+                                        alert("Sorry! No Web Storage support..");
+                                    }
+                                }  
+                           
+                        },
+                        error: function(result){
+                            //$("#message")[0].value = "Ajax error!"+result;
+                            
+                            //var data = $.parseJSON(result);
+                                alert("ajax fail");
+                        }
+
+
+                    });
+                    
+            });
+            
+        };
+
+        //check if already logged in
+
+        function checkLogin(){
+            if (sessionStorage.getItem("trekrlogin") === "true")
+            {
+                window.location = "index.html";
+            }
+        };
+           
+
+    </script>
+</head>
+
+<body onload="checkLogin()">
+    <div data-role="page">
+        <div data-role="header" data-theme="c">
+            <h1>Login!</h1>
+        </div><!-- /header -->
+         <div role="main" class="ui-content">
+    
+                <h3>Login</h3>
+                <label for="txt-first-name">Username</label>
+                <input type="text" name="txt-first-name" id="username" value="">
+                <label for="txt-password">Password</label>
+                <input type="password" name="txt-password" id="password" value="">
+                <button id="submit" onclick="login()"> Submit</button>
+            
+            <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;">
+        </div>
+    </div><!-- /content -->
+    </div>
+</body>
+</html>
