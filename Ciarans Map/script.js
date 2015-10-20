@@ -19,13 +19,13 @@ var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
 
 google.maps.event.addDomListener(window, "load", initialize);
 
-function addKmlLayer(map) {
+function addKmlLayer(map) { //can we import kmllayers from a user's database entry?
     var offasDykeLayer = new google.maps.KmlLayer('http://hikeview.co.uk/tracks/hikeview-offas-dyke.kml');
     offasDykeLayer.setMap(map);
     
 }
 
-function drawMarkers(map) {
+function drawMarkers(map) { //can this be done in kml layer as above^?
     var image = "hike.png";
 
     var marker = new google.maps.Marker({
