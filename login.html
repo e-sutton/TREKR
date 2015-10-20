@@ -18,19 +18,21 @@
                     $.ajax({
                         type: "POST",
                         url: "login.php",
+                        dataType: 'json',
                         data: "username="+user+"&password="+password,
                         success: function(result){
                                 //$("#message")[0].value = "Success";
                                 //alert("Success!");
                                 //window.location = "login.html";
                                 //var data = $.parseJSON(result);
-                                alert("Ajax success" + result);
-                                if (result === '"Logged In"')
+                                alert("Ajax success" + result.a + result.b);
+                                if (result.a === "Logged In")
                                 {
                                 //set session via local storage
                                 if (typeof(Storage) !== "undefined") 
                                     {
                                         sessionStorage.setItem("trekrlogin",true);
+                                        sessionStorage.setItem("trekrid", result.b);
                                         window.location = "index.html";
                                     } 
                                     else 

@@ -4,6 +4,7 @@
 
          $query = " 
             SELECT 
+                id,
                 username, 
                 password, 
                 salt, 
@@ -53,6 +54,8 @@
             { 
                 // If they do, then we flip this to true 
                 $login_ok = true; 
+                //get user id
+                $userid = $row['id'];
             } 
 
         } 
@@ -63,7 +66,7 @@
              
             // Return successful message is login is successfulse
             $result = "Logged In";
-            echo json_encode($result);
+            echo json_encode(array("a" => $result, "b" => $userid));
         } 
         else 
         { 
