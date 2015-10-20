@@ -9,7 +9,7 @@ var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
 
     //addButtons(map);
 
-   drawMarkers(map);
+    drawMarkers(map);
 
     addKmlLayer(map);
 
@@ -110,5 +110,4 @@ function getElevation(event){
             }
         });
 }
-            
   
