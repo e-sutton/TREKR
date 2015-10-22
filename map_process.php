@@ -33,6 +33,7 @@ if($_POST) //run only if there's a post data
     $mLatLang   = explode(',',$_POST["latlang"]);
     $mLat       = filter_var($mLatLang[0], FILTER_VALIDATE_FLOAT);
     $mLng       = filter_var($mLatLang[1], FILTER_VALIDATE_FLOAT);
+    $userid     = $_POST["userid"];
     
     //Delete Marker
     if(isset($_POST["del"]) && $_POST["del"]==true)
@@ -45,7 +46,7 @@ if($_POST) //run only if there's a post data
         exit("Done!");
     }
     
-    $results = $mysqli->query("INSERT INTO markers (lat, lng) VALUES ($mLat, $mLng)");
+    $results = $mysqli->query("INSERT INTO markers (lat, lng, userid) VALUES ($mLat, $mLng, $userid)");
     if (!$results) {  
           header('HTTP/1.1 500 Error: Could not create marker!');  
           exit();

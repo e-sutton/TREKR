@@ -42,6 +42,8 @@
                             });  
                             //focus view on current marker
                             map.panTo(e.latLng);
+                            //save marker
+                            save_marker(marker);
 
 
                             //Content structure of info Window for the Markers
@@ -127,11 +129,15 @@
                           //alert("var delete button");
                           google.maps.event.addDomListener(deleteBtn, "click", function(event) {
                               marker.setMap(null);
-                          });
-                          function save_marker(Marker){
-                              //Save new marker using jQuery Ajax
+                          });                         
+                              }; 
+
+
+                              function save_marker(Marker){
+                              //Save new marker using ajax
                               var mLatLang = Marker.getPosition().toUrlValue(); //get marker position
-                              var myData = {latlang : mLatLang}; //post variables       
+                              var user = sessionStorage.getItem('trekrid');
+                              var myData = {latlang : mLatLang, userid : user};       
                               $.ajax({
                                 type: "POST",
                                 url: "map_process.php",
@@ -146,10 +152,7 @@
                                       alert(thrownError); //throw any errors
                                   }
                               });
-};
-                                 
-                                //marker.setMap(map);
-                              };                    
+};                   
 
 
 						function logout(){

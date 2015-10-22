@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Index</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="jquery/map.css" rel="stylesheet" />
+    <script src="jquery/jquery.mobile-1.4.5.min.js"></script>
+    <script src="jquery/jquery-2.1.4.min.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+
+                       //check login
+                       function checkLogin(){
+
+					                    if (sessionStorage.getItem('trekrlogin') !== "true" || sessionStorage.getItem('trekrlogin') === null)
+					                    {
+					                        window.location = "login.html";
+					                    }
+
+          						};
+          			    //maps jquery
+                    var map = null;
+                    function initMap(){
+                      var dublin = new google.maps.LatLng(53.348244, -6.267938);
+                      var mapOptions = {
+                      center: dublin,
+                      mapTypeId: google.maps.MapTypeId.ROADMAP,
+                      zoom: 11
+                    };   
+                
+              map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            };
+						  function initialize() {
+                        //put marker on map
+                            google.maps.event.addListener(map, 'click', function(e) {
+                            var marker = new google.maps.Marker({
+                              position: e.latLng,
+                              map: map,
+                              draggable:true, //set marker draggable 
+                              animation: google.maps.Animation.DROP //bounce animation
+                            });  
+                            //focus view on current marker
+                            map.panTo(e.latLng);
+
+
+                            //Content structure of info Window for the Markers
+                          var content = $('<div class="marker-window">'+
+                          '<div class="marker-window-inner"><span class="inf-content">'+
+                          '<h1 class="marker-heading">New Marker!</h1>'+
+                          'This is a new infoWindow on a marker'+ 
+                          '</span>'+
+                          '<br/><button id="remove-marker" class="remove-marker" title="Remove Marker">Remove Marker</button>'+
+                          '</div></div>');
+
+                          
+                              
+                          //Create infoWindow
+                          var infowindow = new google.maps.InfoWindow();
+                          
+                          //set the content to display
+                          infowindow.setContent(content[0]);
+                          //alert("test");
+                          
+                          //add event listener which will open on click (touch??)        
+                          google.maps.event.addListener(marker, 'click', function() {
+                              infowindow.open(map,marker);  
+                            });
+
+                          //delete marker
+                          var deleteBtn  = content.find('button#remove-marker')[0];
+                          //alert("var delete button");
+                          google.maps.event.addDomListener(deleteBtn, "click", function(event) {
+                              marker.setMap(null);
+                          });
+                        });
+
+
+                          
+                  };
+
+                         //var map = null;
+                            function showlocation() {
+                               // position request.
+                                navigator.geolocation.getCurrentPosition(callback);
+                            };
+                         
+                            function callback(position) {
+                               
+                              var lat = position.coords.latitude;
+                              var lon = position.coords.longitude;
+                                   
+                              var latLong = new google.maps.LatLng(lat, lon);
+                               
+                                      var marker = new google.maps.Marker({
+                                          position: latLong,
+                                          map: map,
+                                          draggable:true, //set marker draggable 
+                                          animation: google.maps.Animation.DROP //bounce animation
+                                      });      
+
+                          var content = $('<div class="marker-window">'+
+                          '<div class="marker-window-inner"><span class="inf-content">'+
+                          '<h1 class="marker-heading">New Marker!</h1>'+
+                          'This is a new infoWindow on a marker'+ 
+                          '</span>'+
+                          '<br/><button id="remove-marker" class="remove-marker" title="Remove Marker">Remove Marker</button>'+
+                          '</div></div>');
+
+                          //save marker
+                          save_marker(marker);
+                              
+                          //Create infoWindow
+                          var infowindow = new google.maps.InfoWindow();
+                          
+                          //set the content to display
+                          infowindow.setContent(content[0]);
+                          //alert("test");
+                          
+                          //add event listener which will open on click (touch??)        
+                          google.maps.event.addListener(marker, 'click', function() {
+                              infowindow.open(map,marker);  
+                            });
+
+                          //delete marker
+                          var deleteBtn  = content.find('button#remove-marker')[0];
+                          //alert("var delete button");
+                          google.maps.event.addDomListener(deleteBtn, "click", function(event) {
+                              marker.setMap(null);
+                          });
+                          function save_marker(Marker){
+                              //Save new marker using jQuery Ajax
+                              var mLatLang = Marker.getPosition().toUrlValue(); //get marker position
+                              var myData = {latlang : mLatLang}; //post variables       
+                              $.ajax({
+                                type: "POST",
+                                url: "map_process.php",
+                                data: myData,
+                                success:function(data){
+                                      //replaceWin.html(data); //replace info window with new html
+                                      Marker.setDraggable(false); //set marker to fixed
+                                      alert("save marker ajax call success");
+                                      //Marker.setIcon('http://PATH-TO-YOUR-WEBSITE-ICON/icons/pin_blue.png'); //replace icon
+                                  },
+                                  error:function (xhr, ajaxOptions, thrownError){
+                                      alert(thrownError); //throw any errors
+                                  }
+                              });
+};
+                                 
+                                //marker.setMap(map);
+                              };                    
+
+
+						function logout(){
+				                sessionStorage.setItem("trekrlogin",false);
+				                window.location = "login.html";
+
+           				};  
+</script>
+
+</head>
+<body onload="checkLogin(),initMap(), initialize();">
+    <div id="container">
+        <div id="nav">Nav Menu <button onclick="showlocation()">Your position</button></div>
+        <div id="map"></div>
+    </div>
+</body>
+</html>
