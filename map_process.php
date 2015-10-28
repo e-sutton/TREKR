@@ -19,7 +19,7 @@ if (mysqli_connect_errno())
     exit();
 }
 
-################ Save & delete markers #################
+//Save and delete markers 
 if($_POST) //run only if there's a post data
 {
     //make sure request is comming from Ajax
@@ -33,17 +33,17 @@ if($_POST) //run only if there's a post data
     $mLatLang   = explode(',',$_POST["latlang"]);
     $mLat       = filter_var($mLatLang[0], FILTER_VALIDATE_FLOAT);
     $mLng       = filter_var($mLatLang[1], FILTER_VALIDATE_FLOAT);
-    $userid     = $_POST["userid"];
+    $userid     = $_POST["userid"]; 
     
     //Delete Marker
     if(isset($_POST["del"]) && $_POST["del"]==true)
     {
-        $results = $mysqli->query("DELETE FROM markers WHERE lat=$mLat AND lng=$mLng");
+        $results = $mysqli->query("DELETE FROM markers WHERE lat=$mLat AND lng=$mLng AND userid = $userid");
         if (!$results) {  
           header('HTTP/1.1 500 Error: Could not delete Markers!');  
           exit();
         } 
-        exit("Done!");
+        exit("DB Delte Done!");
     }
     
     $results = $mysqli->query("INSERT INTO markers (lat, lng, userid) VALUES ($mLat, $mLng, $userid)");
@@ -65,7 +65,8 @@ $node = $dom->createElement("markers"); //Create new element node
 $parnode = $dom->appendChild($node); //make the node show up 
 
 // Select all the rows in the markers table
-$results = $mysqli->query("SELECT * FROM markers WHERE 1");
+$userid  = $_GET["userid"]; 
+$results = $mysqli->query("SELECT * FROM markers WHERE userid = $userid");
 if (!$results) {  
     header('HTTP/1.1 500 Error: Could not get markers!'); 
     exit();
