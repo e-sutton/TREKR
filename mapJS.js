@@ -30,7 +30,7 @@
                             //Get values for the marker from the form
                             var point = new google.maps.LatLng(parseFloat($(this).attr('lat')), parseFloat($(this).attr('lng')));
 
-                            //call create_marker() function for xml loaded maker
+                            //call create_marker() 
                             create_marker(point, false);
                         });
                     });
@@ -52,11 +52,13 @@
                         save_marker(marker);
 
 
+
+
                         //Content structure of info Window for the Markers
                         var content = $('<div class="marker-window">' +
                             '<div class="marker-window-inner"><span class="inf-content">' +
                             '<h1 class="marker-heading">New Marker!</h1>' +
-                            'This is a new infoWindow on a marker' +
+                            '<div id="weather"></div>' +
                             '</span>' +
                             '<br/><button id="remove-marker" class="remove-marker" title="Remove Marker">Remove Marker</button>' +
                             '</div></div>');
@@ -73,6 +75,25 @@
                         //add event listener which will open on click (touch??)        
                         google.maps.event.addListener(marker, 'click', function() {
                             infowindow.open(map, marker);
+                        //get marker location
+                        var loc  = marker.getPosition().toUrlValue(); //get marker position   
+                        //weather
+                        $.simpleWeather({
+                        location: loc, //get marker position,
+                        woeid: '',
+                        unit: 'c',
+                        success: function(weather) {
+                          html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
+                          html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+                          html += '<li class="currently">'+weather.currently+'</li>';
+                          html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
+                      
+                          $("#weather").html(html);
+                        },
+                        error: function(error) {
+                          $("#weather").html('<p>'+error+'</p>');
+                        }
+                      });
                         });
 
                         //delete marker
@@ -105,10 +126,12 @@
                         animation: google.maps.Animation.DROP //bounce animation
                     });
 
+                        
+
                     var content = $('<div class="marker-window">' +
                         '<div class="marker-window-inner"><span class="inf-content">' +
                         '<h1 class="marker-heading">New Marker!</h1>' +
-                        'This is a new infoWindow on a marker' +
+                        '<div id="weather"></div>' +
                         '</span>' +
                         '<br/><button id="remove-marker" class="remove-marker" title="Remove Marker">Remove Marker</button>' +
                         '</div></div>');
@@ -126,6 +149,23 @@
                     //add event listener which will open on click (touch??)        
                     google.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
+                        //weather
+                        $.simpleWeather({
+                        location: lat+','+lon,
+                        woeid: '',
+                        unit: 'c',
+                        success: function(weather) {
+                          html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
+                          html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+                          html += '<li class="currently">'+weather.currently+'</li>';
+                          html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
+                      
+                          $("#weather").html(html);
+                        },
+                        error: function(error) {
+                          $("#weather").html('<p>'+error+'</p>');
+                        }
+                      });
                     });
 
                     //delete marker
@@ -141,7 +181,6 @@
                     //Save new marker using ajax
                     var mLatLang = Marker.getPosition().toUrlValue(); //get marker position
                     var user = sessionStorage.getItem('trekrid');
-                    alert("save latlong: " + mLatLang);
                     var myData = {
                         latlang: mLatLang,
                         userid: user
@@ -153,7 +192,6 @@
                         success: function(data) {
                             //replaceWin.html(data); //replace info window with new html
                             Marker.setDraggable(false); //set marker to fixed
-                            alert("save marker ajax call success");
                             //Marker.setIcon('http://PATH-TO-YOUR-WEBSITE-ICON/icons/pin_blue.png'); //replace icon
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
@@ -167,7 +205,6 @@
                 function remove_marker(Marker) {
                     var mLatLang = Marker.getPosition().toUrlValue(); //get marker position
                     var user = sessionStorage.getItem('trekrid');
-                    alert("removal latlong: " + mLatLang);
                     var myData = {
                         del: 'true',
                         latlang: mLatLang,
@@ -213,7 +250,7 @@
                     var content = $('<div class="marker-window">' +
                         '<div class="marker-window-inner"><span class="inf-content">' +
                         '<h1 class="marker-heading">New Marker!</h1>' +
-                        'This is a new infoWindow on a marker' +
+                        '<div id="weather"></div>' +
                         '</span>' +
                         '<br/><button id="remove-marker" class="remove-marker" title="Remove Marker">Remove Marker</button>' +
                         '</div></div>');
@@ -228,6 +265,26 @@
                     //add event listener which will open on click (touch??)        
                     google.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
+                        //get marker location
+                        var loc  = marker.getPosition().toUrlValue(); //get marker position   
+                        //weather
+                        $.simpleWeather({
+                        location: loc, //get marker position,
+                        woeid: '',
+                        unit: 'c',
+                        success: function(weather) {
+                          html = '<h2><i class="icon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h2>';
+                          html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+                          html += '<li class="currently">'+weather.currently+'</li>';
+                          html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
+
+                          $("#weather").html(html);
+                        },
+                        error: function(error) {
+                          $("#weather").html('<p>'+error+'</p>');
+                        }
+                      });
+                        
                     });
 
                     //delete marker
