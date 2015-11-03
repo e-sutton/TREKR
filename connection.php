@@ -21,7 +21,7 @@ $dbname = "TREKR";
 //$dbname = "1819848_ms";
 
 try{
-    $db = new PDO("mysql:host={$host}; port=8889; dbname={$dbname};charset=UTF8", $username, $password, $options);
+    $db = new PDO("mysql:host={$host}; dbname={$dbname};charset=UTF8", $username, $password, $options);
 } catch (PDOException $ex) {
     die("Failed to connect to the database: " . $ex->getMessage()); 
 }
