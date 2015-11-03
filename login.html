@@ -3,12 +3,20 @@
 <html>
 <head>
     <title>TREKR</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jquery mobile links/scripts -->
     <link href="jquery/jquery.mobile.icons.min.css" rel="stylesheet" />
-    <link href="jquery/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet" />
-    <link href="jquery/app.css" rel="stylesheet" />
     <script src="jquery/jquery-2.1.4.min.js"></script>
     <script src="jquery/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="themes/maintheme.css" /> <!--link to themeroller "D" css -->
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!--sizing -->   
+    <link href="jquery/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet" /> <!-- what is this-->
+    <link href="jquery/app.css" rel="stylesheet" /> <!--app css-->
+    
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'><!-- font -->
+    
+    
     <script> 
             function login(){
                 $(document).ready(function(){
@@ -69,22 +77,28 @@
 </head>
 
 <body onload="checkLogin()">
-    <div data-role="page">
-        <div data-role="header" data-theme="c">
-            <h1>Login!</h1>
-        </div><!-- /header -->
-         <div role="main" class="ui-content">
-    
-                <h3>Login</h3>
+    <div data-role="page" id="page1">
+        <div data-role="header" data-theme="d">
+            <img src="logo.png" alt="logo" id="logo"/>
+        </div>
+        <div role="main" class="ui-content">
+            <div id="loginarea">
+                <div id="slogan">
+                    <p class="slogantext">"I haven't been everywhere,</p>
+                    <p class="slogantext">but it's on my list."</p>
+                    <p class="slogantext">- Susan Sontag</p>
+                </div>
+                <h3 id="logintitle">Login</h3>
                 <label for="txt-first-name">Username</label>
                 <input type="text" name="txt-first-name" id="username" value="">
                 <label for="txt-password">Password</label>
                 <input type="password" name="txt-password" id="password" value="">
-                <button id="submit" onclick="login()"> Submit</button>
-            
-            <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;">
+                <br/>
+                <button id="submit" onclick="login()">TREK</button>
+            </div>
+            <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;"></div>
+            <!-- <a href="#page2">Page 2</a> -->
         </div>
-    </div><!-- /content -->
     </div>
 </body>
 </html>
