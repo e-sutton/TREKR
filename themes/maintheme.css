@@ -47,10 +47,20 @@
     padding-bottom: 20px;
 }
 
+<<<<<<< HEAD:themes/maintheme.css
 #registerlink{
     text-decoration: none;
     color: darkgreen;
     font-size: 15px;
+=======
+ #page1.ui-page{
+    background: url('background.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-size:100% 100%;
+>>>>>>> 2b7fdccb403fcf9a702adaddc8bd91f39175a808:themes/maintheme.css
 }
 
 
