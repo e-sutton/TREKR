@@ -32,7 +32,7 @@
                                 //alert("Success!");
                                 //window.location = "login.html";
                                 //var data = $.parseJSON(result);
-                                alert("Ajax success" + result.a + result.b);
+                                //alert("Ajax success" + result.a + result.b);
                                 if (result.a === "Logged In")
                                 {
                                 //set session via local storage
@@ -74,11 +74,11 @@
            
 
     </script>
-    <!--<script> 
-            function login(){ /*NEED TO CHANGE NAME, CONFLICTS WITH OTHER FUNCTION ABOVE*/
+    <script> 
+            function register(){ 
 
                 $(document).ready(function(){
-                    var user = $("#username")[0].value;
+                    var user = $("#regusername")[0].value;
                     var email = $("#email")[0].value;
                     var password = $("#password")[0].value;
                     $.ajax({
@@ -105,15 +105,11 @@
 
            
 
-    </script>-->
+    </script>
 </head>
 
 <body onload="checkLogin()">
-<<<<<<< HEAD
     <div data-role="page" id="loginpage">
-=======
-    <div data-role="page" id="page1">
->>>>>>> 2b7fdccb403fcf9a702adaddc8bd91f39175a808
         <div data-role="header" data-theme="d">
             <img src="logo.png" alt="logo" id="logo"/>
         </div>
@@ -131,7 +127,6 @@
                 <input type="password" name="txt-password" id="password" value="">
                 <br/>
                 <button id="submit" onclick="login()">TREK</button>
-<<<<<<< HEAD
                 <br/>
                 <a href="#registerpage" data-transition="slidedown" id="registerlink">Register</a>
             </div>
@@ -147,24 +142,21 @@
             <div id="loginarea">
                 <h3 id="logintitle">Sign Up</h3>
                 <label for="txt-first-name">Username</label>
-                <input type="text" name="txt-first-name" id="username" value="">
+                <input type="text" name="txt-first-name" id="regusername" value="">
                 <label for="txt-email">Email Address</label>
                 <input type="text" name="txt-email" id="email" value="">
                 <label for="txt-password">Password</label>
                 <input type="password" name="txt-password" id="password" value="">  
                 <br/>
-                <button id="submit" onclick="login()"> Submit</button>
+                <button id="submit" onclick="register()"> Submit</button>
                 <br/>
                 <a href="#loginpage" data-transition="slideup" id="registerlink">Login</a> <!-- may need to remove, allow user to return to login from register?-->
                 <div id="message"></div> <!-- this need to be coded? -->
             </div>
             <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;"></div> <!--no idea what this does-->
-=======
-            </div>
-            <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;"></div>
-            <!-- <a href="#page2">Page 2</a> -->
->>>>>>> 2b7fdccb403fcf9a702adaddc8bd91f39175a808
         </div>
+            <!-- <a href="#page2">Page 2</a> -->
+        
     </div>
     
 </body>

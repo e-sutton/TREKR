@@ -216,7 +216,7 @@
                         data: myData,
                         success: function(data) {
                             Marker.setMap(null);
-                            alert(data);
+                            //alert(data);
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                             alert(thrownError); //throw any errors
@@ -294,6 +294,19 @@
                         remove_marker(marker);
                     });
                 };
+
+                /*function startTrail(){
+                    //on start
+                    //start with normal show location marker
+                    //set gps to display marker every 30 secs
+                    //store marker every 30 secs in array
+                    //on stop, save array to db
+                    //save all against a trekid
+                    function showlocation();
+
+
+
+                };*/
 
                 function logout() {
                     sessionStorage.setItem("trekrlogin", false);
